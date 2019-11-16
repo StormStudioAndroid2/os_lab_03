@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sergey/Рабочий стол/work/os_lab_3/src/linked_list.c
+linked_list.h
+/home/sergey/Рабочий стол/work/os_lab_3/src/linked_list.h
+stdlib.h
+-
+
+/home/sergey/Рабочий стол/work/os_lab_3/src/linked_list.h
+stdio.h
+-
+
+/home/sergey/Рабочий стол/work/os_lab_3/src/main.c
+pthread.h
+-
+stdbool.h
+-
+ctype.h
+-
+linked_list.h
+/home/sergey/Рабочий стол/work/os_lab_3/src/linked_list.h
+
