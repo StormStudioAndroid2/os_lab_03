@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/sergey/Рабочий стол/work/os_lab_3/src"
+CMAKE_SOURCE_DIR = "/home/sergey/Рабочий стол/work/os_lab_03/src"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/sergey/Рабочий стол/work/os_lab_3/src"
+CMAKE_BINARY_DIR = "/home/sergey/Рабочий стол/work/os_lab_03/src"
 
 # Include any dependencies generated for this target.
 include CMakeFiles/OS_lab_3.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/OS_lab_3.dir/flags.make
 
 CMakeFiles/OS_lab_3.dir/main.c.o: CMakeFiles/OS_lab_3.dir/flags.make
 CMakeFiles/OS_lab_3.dir/main.c.o: main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/sergey/Рабочий стол/work/os_lab_3/src/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/OS_lab_3.dir/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/OS_lab_3.dir/main.c.o   -c "/home/sergey/Рабочий стол/work/os_lab_3/src/main.c"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/sergey/Рабочий стол/work/os_lab_03/src/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/OS_lab_3.dir/main.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/OS_lab_3.dir/main.c.o   -c "/home/sergey/Рабочий стол/work/os_lab_03/src/main.c"
 
 CMakeFiles/OS_lab_3.dir/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/OS_lab_3.dir/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/sergey/Рабочий стол/work/os_lab_3/src/main.c" > CMakeFiles/OS_lab_3.dir/main.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/sergey/Рабочий стол/work/os_lab_03/src/main.c" > CMakeFiles/OS_lab_3.dir/main.c.i
 
 CMakeFiles/OS_lab_3.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/OS_lab_3.dir/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/sergey/Рабочий стол/work/os_lab_3/src/main.c" -o CMakeFiles/OS_lab_3.dir/main.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/sergey/Рабочий стол/work/os_lab_03/src/main.c" -o CMakeFiles/OS_lab_3.dir/main.c.s
 
 CMakeFiles/OS_lab_3.dir/main.c.o.requires:
 
@@ -83,16 +83,16 @@ CMakeFiles/OS_lab_3.dir/main.c.o.provides.build: CMakeFiles/OS_lab_3.dir/main.c.
 
 CMakeFiles/OS_lab_3.dir/linked_list.c.o: CMakeFiles/OS_lab_3.dir/flags.make
 CMakeFiles/OS_lab_3.dir/linked_list.c.o: linked_list.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/sergey/Рабочий стол/work/os_lab_3/src/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/OS_lab_3.dir/linked_list.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/OS_lab_3.dir/linked_list.c.o   -c "/home/sergey/Рабочий стол/work/os_lab_3/src/linked_list.c"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/sergey/Рабочий стол/work/os_lab_03/src/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/OS_lab_3.dir/linked_list.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/OS_lab_3.dir/linked_list.c.o   -c "/home/sergey/Рабочий стол/work/os_lab_03/src/linked_list.c"
 
 CMakeFiles/OS_lab_3.dir/linked_list.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/OS_lab_3.dir/linked_list.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/sergey/Рабочий стол/work/os_lab_3/src/linked_list.c" > CMakeFiles/OS_lab_3.dir/linked_list.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/sergey/Рабочий стол/work/os_lab_03/src/linked_list.c" > CMakeFiles/OS_lab_3.dir/linked_list.c.i
 
 CMakeFiles/OS_lab_3.dir/linked_list.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/OS_lab_3.dir/linked_list.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/sergey/Рабочий стол/work/os_lab_3/src/linked_list.c" -o CMakeFiles/OS_lab_3.dir/linked_list.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/sergey/Рабочий стол/work/os_lab_03/src/linked_list.c" -o CMakeFiles/OS_lab_3.dir/linked_list.c.s
 
 CMakeFiles/OS_lab_3.dir/linked_list.c.o.requires:
 
@@ -117,7 +117,7 @@ OS_lab_3: CMakeFiles/OS_lab_3.dir/main.c.o
 OS_lab_3: CMakeFiles/OS_lab_3.dir/linked_list.c.o
 OS_lab_3: CMakeFiles/OS_lab_3.dir/build.make
 OS_lab_3: CMakeFiles/OS_lab_3.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/sergey/Рабочий стол/work/os_lab_3/src/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable OS_lab_3"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/sergey/Рабочий стол/work/os_lab_03/src/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable OS_lab_3"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/OS_lab_3.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -135,6 +135,6 @@ CMakeFiles/OS_lab_3.dir/clean:
 .PHONY : CMakeFiles/OS_lab_3.dir/clean
 
 CMakeFiles/OS_lab_3.dir/depend:
-	cd "/home/sergey/Рабочий стол/work/os_lab_3/src" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/sergey/Рабочий стол/work/os_lab_3/src" "/home/sergey/Рабочий стол/work/os_lab_3/src" "/home/sergey/Рабочий стол/work/os_lab_3/src" "/home/sergey/Рабочий стол/work/os_lab_3/src" "/home/sergey/Рабочий стол/work/os_lab_3/src/CMakeFiles/OS_lab_3.dir/DependInfo.cmake" --color=$(COLOR)
+	cd "/home/sergey/Рабочий стол/work/os_lab_03/src" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/sergey/Рабочий стол/work/os_lab_03/src" "/home/sergey/Рабочий стол/work/os_lab_03/src" "/home/sergey/Рабочий стол/work/os_lab_03/src" "/home/sergey/Рабочий стол/work/os_lab_03/src" "/home/sergey/Рабочий стол/work/os_lab_03/src/CMakeFiles/OS_lab_3.dir/DependInfo.cmake" --color=$(COLOR)
 .PHONY : CMakeFiles/OS_lab_3.dir/depend
 

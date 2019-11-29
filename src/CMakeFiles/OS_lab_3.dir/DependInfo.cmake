@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/sergey/Рабочий стол/work/os_lab_3/src/linked_list.c" "/home/sergey/Рабочий стол/work/os_lab_3/src/CMakeFiles/OS_lab_3.dir/linked_list.c.o"
-  "/home/sergey/Рабочий стол/work/os_lab_3/src/main.c" "/home/sergey/Рабочий стол/work/os_lab_3/src/CMakeFiles/OS_lab_3.dir/main.c.o"
+  "/home/sergey/Рабочий стол/work/os_lab_03/src/linked_list.c" "/home/sergey/Рабочий стол/work/os_lab_03/src/CMakeFiles/OS_lab_3.dir/linked_list.c.o"
+  "/home/sergey/Рабочий стол/work/os_lab_03/src/main.c" "/home/sergey/Рабочий стол/work/os_lab_03/src/CMakeFiles/OS_lab_3.dir/main.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

@@ -1,66 +1,86 @@
 #include "linked_list.h"
 #include <stdlib.h>
-
-void AddList(linkedList l,int value) {
+doubleList* head;
+int size;
+void AddList(char value[9],int cell,char nowGamer) {
+    Data* dd = (Data*)malloc(sizeof(Data));
+ 
     doubleList* node = (doubleList*) malloc(sizeof(doubleList)); 
-    node->data=value; 
-    if (l.head==NULL) {
-        node->next=node;
-        node->prev=node; 
-        l.head=node; 
-        l.size++;
+    for (int i = 0; i<9; ++i) {
+        dd->matrix[i] = value[i];
     }
-    else {
-        doubleList *p=l.head;
+    dd->cell = cell;
+    dd->nowGamer = nowGamer;
+   
+    node->data = dd;
+    if (head==NULL) {
+        node->next=NULL;
+        node->prev=NULL; 
+        head=node; 
+        size++;
+    } else {
+        doubleList *p=head;
         while (p->next!=NULL) {
             p = p->next;
         }
         p->next = node;
         node->prev = p;
         node->next = NULL;
-                l.size++;
+        size++;
 
         }
 
 }
-void init(linkedList l) {
-    l.head = NULL;
-    l.size = 0;
+void init() {
+    head = NULL;
+    size = 0;
 }
-int get(linkedList l, int pos) {
-    if (pos<0) {return 0;}
-    doubleList* d = l.head;
+Data* get(int pos) {
+    doubleList* d = head;
     for (int i = 0; i<pos; ++i) {
         d = d->next;
     }
     return d->data;
 }
-int getLength(linkedList l) {
-    return l.size;
+int getLength() {
+    return size;
 }
-int DeleteFromList(linkedList l,int position) {
-    if (l.head==NULL) { return 0; }
-    if (l.head==l.head->next) {
-        free(l.head); 
-        l.head=NULL;
-        l.size--;
-    } else {
-        doubleList *a=l.head;
-        for (int i=position; i>1; i--) a=a->next;
-        if (a==l.head) l.head=a->next;
-        a->prev->next=a->next; 
-        a->next->prev=a->prev;
-        l.size--;
-        free(a);
+void DeleteFromList(int position) {
+    doubleList* d = head;
+    for (int i = 0; i<position; ++i) {
+        d = d->next;
     }
-
+    if (d==head) {
+        head = d->next;
+        if (d->next!=NULL) {
+            d->next->prev = NULL;
+        }
+    size--;
+    free(d);
+    } else {
+    if (d->next!=NULL) {
+        d->next->prev = d->prev;
+    }
+    if (d->prev!=NULL) {
+        d->prev->next = d->next;
+    } else {
+        d->next->prev = NULL;
+    }
+    size--;
+    free(d);
+    }
 }
 
 
-void deleteList(linkedList l, doubleList head) 
+void DeleteList() 
 { 
-    if (l.head == NULL) 
-        return; 
-    deleteList(l,*l.head->next);  
-    free(l.head); 
+    doubleList* d = head;
+    while (d!=NULL) {
+        doubleList* p = d->next;
+        free(d->data);
+        free(d);
+        d = p;
+    }
+    
+    
 } 

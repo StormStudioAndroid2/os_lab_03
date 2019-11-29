@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include "linked_list.h"
+#include "stdlib.h"
 // лаба 3, вариант 11
 // поиск кратчайшего пути в графе поиском в ширину
 // граф задается матрицей смежности
@@ -13,124 +14,127 @@ char change_gamer(char c) {
     }
     return 'x';
 }
-linkedList getFreeCells(char matrix[3][3]) {
-    linkedList d;
-    init(d);
-    for (int i = 0; i<3; ++i) {
-        for (int j = 0; j<3; ++j) {
-            if (matrix[i][j]=='*') {
-                AddList(d,i*3+j);
-            }
-        }
-    }
+linkedList* list;
 
-    return d;
-}
-int freeCells(char matrix[3][3]) {
+int freeCells(char matrix[9]) {
     int count = 0;
-    for (int i = 0; i < 3; ++i ) {
-        for (int j = 0; j < 3; ++j) {
-            if (matrix[i][j]=='*') {
+    for (int i = 0; i < 9; ++i ) {
+            if (matrix[i]=='*') {
                 count++;
             }
-        }
+        
     }
     return count;
 }
-char checkGame(char matrix[3][3]) {
-    if (matrix[0][0]==matrix[1][1] && matrix[1][1]==matrix[2][2] && matrix[0][0]!='*') {
-        return matrix[0][0];
+char checkGame(char* matrix) {
+    if (matrix[0]==matrix[1*3+1] && matrix[1*3+1]==matrix[2*3+2] && matrix[0]!='*') {
+        return matrix[0];
     }
     for (int i = 0; i<3; ++i) {
-        if (matrix[i][0]==matrix[i][1] && matrix[i][1]==matrix[i][2] && matrix[i][2]!='*') {
-            return matrix[i][0];
+        if (matrix[i*3+0]==matrix[i*3+1] && matrix[i*3+1]==matrix[i*3+2] && matrix[i*3+2]!='*') {
+            return matrix[i*3+0];
         }
-        if (matrix[0][i]==matrix[1][i] && matrix[1][i]==matrix[2][i] && matrix[2][i]!='*') {
-            return matrix[0][i];
+        if (matrix[0*3+i]==matrix[1*3+i] && matrix[1*3+i]==matrix[2*3+i] && matrix[2*3+i]!='*') {
+            return matrix[0*3+i];
         }
 
     }
-    if (matrix[0][2]==matrix[1][1] && matrix[1][1]==matrix[2][0] && matrix[0][2]!='*') {
-        return matrix[0][2];
+    if (matrix[0*3+2]==matrix[1*3+1] && matrix[1*3+1]==matrix[2*3+0] && matrix[0*3+2]!='*') {
+        return matrix[0*3+2];
     }
-    return ' ';
+    return 0;
 }
 int cells[9];
-typedef struct Data data;
+typedef struct Parameter Parameter;
 
-typedef struct Data {
+typedef struct Parameter {
     char optimal_gamer;
-    char now_gamer;
-    char matrix[3][3];
-    linkedList list;
+    linkedList* list;
+    Data* element;
     pthread_mutex_t *thread_count_mutex;
      int *max_thread_count;
-    pthread_mutex_t *mutex;
+    pthread_mutex_t *mutex_list;
     int cell;
 };
 int min(int lhs, int rhs) {
     return lhs > rhs ? rhs : lhs;
 }
 
-//каждый раз новый поток принимает thread_params
-//current_vertex - текущая вершина в обходе
-//result - там хранятся подсчитанные расстояния до вершин, или -1 если не подсчитано
-//max_thread_count - эта переменная уменьшается при создании нового потока,
-//таким образом будет создано столько потоков сколько нужно
-//mutex - мьютекс для синхронизации доступа к result
-//list - список смежности для графа, будем считать, что граф связный
+
 void *find_optimal(void *args) {
-    data* data1 = (data*) args;
 
-   
+    Parameter* parameter = (Parameter*) args;
+    char isWin = ' ';
+    int isBoolWin = 0;
+    Data* d = parameter->element;
+ 
+    for (int i = 0; i<9; ++i) {
+        if (d->matrix[i]=='*') {
+            d->matrix[i] =  d->nowGamer;
+            isWin = checkGame(d->matrix);
+             if (isWin==parameter->optimal_gamer) {
+                cells[(d->cell!=-1 ? d->cell : i)]+=1;
+                isBoolWin = 1;
+             }
+            if (isWin==change_gamer(parameter->optimal_gamer)) {
+                cells[(d->cell!=-1 ? d->cell : i)]-=1;
+                isBoolWin = 1;
 
-
-    pthread_mutex_lock(data1->thread_count_mutex);
-    int quantityThreads = min(*(data1->max_thread_count), freeCells(data1->matrix));
-    *(data1->max_thread_count) -= quantityThreads;
-    pthread_mutex_unlock(data1->thread_count_mutex);
-
-    pthread_t* threads = malloc(sizeof(pthread_t) * quantityThreads);
-    data* new_params = malloc(sizeof(data) * quantityThreads);
-            pthread_mutex_lock(data1->mutex);
-
-    for (int i = 0; i < quantityThreads-1 && i<getLength(data1->list); ++i) {
-        data1->matrix[get(data1->list,0)/3][get(data1->list,0)%3] = data1->now_gamer;
-        if (checkGame(data1->matrix)!=' ') {
-            if (checkGame(data1->matrix)==data1->optimal_gamer) {
-                cells[(data1->cell!=-1 ? data1->cell : get(data1->list,0))]+=10;
-            } else {
-                cells[(data1->cell!=-1 ? data1->cell : get(data1->list,0))]-=10;  
-            }
+             }
+             d->matrix[i] = '*';
         }
-        new_params[i] = *data1;
-        new_params[i].now_gamer = change_gamer(data1->now_gamer);
-        new_params[i].cell = (data1->cell!=-1 ? data1->cell : get(data1->list,0));
-        new_params[i].list = getFreeCells(data1->matrix);
-        pthread_create(&threads[i], NULL, find_optimal, &new_params[i]);
-        data1->matrix[get(data1->list,i)/3][get(data1->list,i)%3] = data1->now_gamer;
-        DeleteFromList(data1->list,0);
-
-    }
-    if (getLength(data1->list)!=0) {
-         new_params[quantityThreads-1] = *data1;
-        new_params[quantityThreads-1].cell = (data1->cell!=-1 ? data1->cell : get(data1->list,quantityThreads-1));
-        new_params[quantityThreads-1].list = getFreeCells(data1->matrix);
-        pthread_create(&threads[quantityThreads-1], NULL, find_optimal, &new_params[quantityThreads-1]);
     }
     
-   
+  
+    if (isBoolWin==0 && freeCells(d->matrix)!=0) { 
+        for (int i = 0; i<9; ++i) {
+            if (d->matrix[i]=='*') {
+                d->matrix[i]=d->nowGamer;
+                int k = d->cell!=-1? d->cell:i;
+                AddList(d->matrix,k,change_gamer(d->nowGamer));
+                d->matrix[i]='*';
 
+            }
+        }
+      
+        pthread_mutex_lock(parameter->thread_count_mutex);
+        int quantityThreads = min(*(parameter->max_thread_count), getLength(parameter->list)-1);
+        *(parameter->max_thread_count) -= quantityThreads;
+        pthread_mutex_unlock(parameter->thread_count_mutex);
+        pthread_mutex_lock(parameter->mutex_list);
 
-    for (int i = 0; i < quantityThreads; ++i) {
-        pthread_join(threads[i], NULL);
+        pthread_t* threads = malloc(sizeof(pthread_t) * (quantityThreads));
+        Parameter* new_params = malloc(sizeof(Parameter) * (quantityThreads));
+        for (int i = 0; i<quantityThreads; ++i) {
+            new_params[i] = *parameter;
+            new_params[i].element = get(0);
+            DeleteFromList(0);
+
+        }
+                pthread_mutex_unlock(parameter->mutex_list);
+        for (int i = 0; i<quantityThreads; ++i) {
+            pthread_create(&threads[i], NULL, find_optimal, &new_params[i]);
+
+        }
+      
+        for (int i = 0; i < quantityThreads; ++i) {
+            pthread_join(threads[i], NULL);
+                     pthread_mutex_lock(parameter->thread_count_mutex);
+
+             parameter->max_thread_count++;
+                     pthread_mutex_unlock(parameter->thread_count_mutex);
+
+        }
+       
+        free(new_params);
+        free(threads);
+        free(parameter->element);
+      
+
     }
-    pthread_mutex_lock(data1->thread_count_mutex);
-    data1->max_thread_count += quantityThreads;
-    pthread_mutex_unlock(data1->thread_count_mutex);
-    free(new_params);
-    free(threads);
-    DeleteFromList(data1->list,*data1->list.head);    
+
+
+  
     pthread_exit(NULL);
 }
 
@@ -159,58 +163,102 @@ int main(int argc, char** argv) {
         printf("Incorrect thread count\n");
         exit(1);
     }
-    char matrix[3][3];
+    for(int i = 0; i<9; ++i) {
+        cells[i] = 0;
+    }
+    char matrix[9];
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
             char c = fgetc(file);
-            if (c=='\n') break;
-            matrix[i][j]=c;
+            if (c=='\n') {
+                j--;
+                break;
+            };
+            matrix[i*3+j]=c;
         }
+        fgetc(file);
     }
     char a;
     fscanf(file, " %c", &a);
-
-    fclose(file);
     
+    fclose(file);
+    init();
     int n;
-    fscanf("%d", &n);
-    pthread_mutex_t *mutex = malloc(sizeof(pthread_mutex_t) * n);
-    pthread_mutex_init(mutex, NULL);
+
+    pthread_mutex_t *mutex_list = malloc(sizeof(pthread_mutex_t));
+    pthread_mutex_init(mutex_list, NULL);
     pthread_mutex_t* thread_count_mutex = malloc(sizeof(pthread_mutex_t));
     pthread_mutex_init(thread_count_mutex, NULL);
 
-   
+     
     (*max_thread_count)--;
-
-    data parameters = (data) {
+    int boolNull = 1;
+    for (int i = 0; i<9;++i) {
+        if (matrix[i]!='*') {
+            boolNull = 0;
+        }
+    }
+    if (boolNull==0) {
+    Parameter parameters = (Parameter) {
              .max_thread_count = max_thread_count,
-             .now_gamer = a,
              .optimal_gamer = a,  
-            .list = getFreeCells(matrix),
-            .mutex = mutex,
+            .list = list,
+            .mutex_list = mutex_list,
             .cell = -1,
             .thread_count_mutex = thread_count_mutex};
+  
+    AddList(matrix,-1,a);
+      while (getLength()!=0) {
+            pthread_t* threads = malloc(sizeof(pthread_t));
 
-    pthread_t* first_thread = malloc(sizeof(pthread_t));
-    pthread_create(first_thread, NULL, find_optimal, &parameters);
-    pthread_join(*first_thread, NULL);
-    int max = cells[0];
+
+            Parameter new_params = *(Parameter*)(malloc(sizeof(Parameter)));
+            new_params = parameters;
+            new_params.element = get(0);
+            DeleteFromList(0);
+            pthread_create(threads, NULL, find_optimal, &new_params);
+            pthread_join(*threads,NULL);
+        }
+    } else {
+        cells[1*3+1] = 1000;
+    }
+    int max = -30000;
     for (int i = 1; i<9; ++i) {
-        if (cells[i]>max) {
+        if (cells[i]>max  && matrix[i]=='*') {
             max = cells[i];
         }
     }
-    for (int k = 0; k < n; ++k) {
-        for (int i = 0; i <3; ++i) {
-            for (int j = 0; j<3; ++i) {
-                if (i*3+j==k) {
-                    printf("%c",a);
-                } else {
-                    printf("%c",matrix[i][j]);
-                }
+        for (int k = 0; k < 9; ++k) {
+            if (cells[k]==max) {
+        for (int i = 0; i<3; ++i) {
+        for (int j = 0; j<3; ++j) {
+            if (k==i*3+j && cells[k]==max) {
+                printf("%c",a);
+            } else {
+                printf("%c",matrix[i*3+j]);
             }
-            printf("\n");
         }
+        printf("\n");
     }
+    printf("\n");
+    }
+    } 
+   
+    free(max_thread_count);
+    free(mutex_list);
+    free(thread_count_mutex);
+    //     for (int i = 0; i <3; ++i) {
+    //         for (int j = 0; j<3; ++i) {
+    //             if (i*3+j==k) {
+    //                 printf("%c",a);
+    //             } else {
+    //                 printf("%c",matrix[i][j]);
+    //             }
+    //         }
+    //         printf("\n");
+    //     }
+    //     }
+    // }
     return 0;
+
 }
